@@ -1,13 +1,13 @@
 //File: routes/tvshows.js
 module.exports = function(app) {
 
-  var TVShow = require('../models/tvshow.js');
+  var TVShow = require('../models/actividad.js');
 
   //GET - Return all tvshows in the DB
-  findAllTVShows = function(req, res) {
+  findAllActividades = function(req, res) {
   	TVShow.find(function(err, tvshows) {
   		if(!err) {
-        console.log('GET /tvshows')
+        console.log('GET /actividades')
   			res.send(tvshows);
   		} else {
   			console.log('ERROR: ' + err);
@@ -33,13 +33,10 @@ module.exports = function(app) {
   	console.log(req.body);
 
   	var tvshow = new TVShow({
-  		title:    req.body.title,
-  		year: 	  req.body.year,
-  		country:  req.body.country,
-  		poster:   req.body.poster,
-  		seasons:  req.body.seasons,
-  		genre:    req.body.genre,
-  		summary:  req.body.summary  
+  		nombreActividad:    req.body.nombreActividad,
+  		fechaActividad: 	  req.body.fechaActividad,
+  		descripcionActividad:   req.body.descripcionActividad,
+  		tipoActividad:    req.body.tipoActividad
   	});
 
   	tvshow.save(function(err) {
@@ -57,12 +54,9 @@ module.exports = function(app) {
   updateTVShow = function(req, res) {
   	TVShow.findById(req.params.id, function(err, tvshow) {
   		tvshow.title   = req.body.petId;
-  		tvshow.year    = req.body.year;
-  		tvshow.country = req.body.country;
-  		tvshow.poster  = req.body.poster;
-  		tvshow.seasons = req.body.seasons;
-  		tvshow.genre   = req.body.genre;
-  		tvshow.summary = req.body.summary;
+  		tvshow.fechaActividad    = req.body.fechaActividad;
+  		tvshow.descripcionActividad  = req.body.descripcionActividad;
+  		tvshow.tipoActividad   = req.body.tipoActividad;
 
   		tvshow.save(function(err) {
   			if(!err) {
@@ -89,7 +83,7 @@ module.exports = function(app) {
   }
 
   //Link routes and functions
-  app.get('/tvshows', findAllTVShows);
+  app.get('/actividades', findAllActividades);
   app.get('/tvshow/:id', findById);
   app.post('/tvshow', addTVShow);
   app.put('/tvshow/:id', updateTVShow);

@@ -14,8 +14,9 @@ app.get('/', function(req, res) {
   res.send("Hello world!");
 });
 
-routes = require('./routes/tvshows')(app);
+routes = require('./routes/actividades')(app);
 
+//---Recordar cambiar la base de datos a actividadesDataBase.
 mongoose.connect('mongodb://localhost/tvshows', function(err, res) {
 	if(err) {
 		console.log('ERROR: connecting to Database. ' + err);
